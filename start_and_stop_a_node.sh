@@ -5,6 +5,7 @@
 #$4 - unpack DB?
 #$5 - number of nodes to load
 #$6 - python script
+#$7 - enable batch transactions?
 
 echo "starting node"
 port=$2
@@ -45,6 +46,15 @@ do
     else
     echo "start node.. mainnet on port: "$port
     fi
+
+    if [ -n "$7" ];
+    then
+        if $7
+        then
+            cmdOpt=${cmdOpt}" --batch-txns"
+        fi
+    fi
+
     echo "cmdOpt ="$cmdOpt
     java -jar iri-$1.jar -p $port -u $port -t `expr $port + $5` -n 'udp://localhost:'`expr $port - 1`' udp://localhost:'`expr $port + 1` $cmdOpt &> iri.log &
     echo $! > iri.pid
