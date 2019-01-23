@@ -36,7 +36,7 @@ while 1:
         exit(0)
     else:
         counter += 1
-        if counter < 50:
+        if counter < txn_num * 3:
             print "waiting for IOTA transaction count..."
         else:
             print "Error! transaction number added failed!"
