@@ -12,7 +12,7 @@ else:
     print "Send milestone failed"
     exit(-1)
 
-time.sleep(80)
+time.sleep(40)
 
 # 1. get current txn count
 tx_count = commands.getoutput("grep \"totalTransactions =\" ./node1/iri.log  | tail -n 1 | awk '{print $25}'")
@@ -38,7 +38,7 @@ while 1:
         exit(0)
     else:
         counter += 1
-        if counter < 50:
+        if counter < txn_num * 3:
             print "waiting for IOTA transaction count..."
         else:
             print "Error! transaction number added failed!"
