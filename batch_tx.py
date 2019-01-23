@@ -2,7 +2,7 @@ import time
 import commands
 import os
 
-txn_num = 300
+txn_num = 1
 
 # 1. get current txn count
 tx_count = commands.getoutput("grep \"totalTransactions =\" ./node1/iri.log  | tail -n 1 | awk '{print $25}'")
