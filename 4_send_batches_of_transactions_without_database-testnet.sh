@@ -8,7 +8,7 @@ fi
 
 #default port
 if [ -z "$2" ];
-then PORT="14266";
+then PORT="14700";
 else PORT=$2;
 fi
 

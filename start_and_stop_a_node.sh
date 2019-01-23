@@ -51,7 +51,7 @@ do
     then
         if $7
         then
-            cmdOpt=${cmdOpt}" --batch-txns"
+            cmdOpt=${cmdOpt}" --mwm 1 --batch-txns"
         fi
     fi
 
