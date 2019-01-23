@@ -51,7 +51,7 @@ do
     then
         if $7
         then
-            cmdOpt=${cmdOpt}" --mwm 1 --batch-txns"
+            cmdOpt=${cmdOpt}" --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote --batch-txns"
         fi
     fi
 
