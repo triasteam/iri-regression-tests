@@ -2,17 +2,17 @@ import time
 import commands
 import os
 
-txn_num = 1
+txn_num = 100
 
 # 0. send milestone
-ret = os.system("java -jar ../../private-iota-testnet/target/iota-testnet-tools-0.1-SNAPSHOT-jar-with-dependencies.jar Coordinator localhost 14700")
-if ret == 0:
-    print "Send milestone successfully"
-else:
-    print "Send milestone failed"
-    exit(-1)
+#ret = os.system("java -jar ../../private-iota-testnet/target/iota-testnet-tools-0.1-SNAPSHOT-jar-with-dependencies.jar Coordinator localhost 14700")
+#if ret == 0:
+#    print "Send milestone successfully"
+#else:
+#    print "Send milestone failed"
+#    exit(-1)
 
-time.sleep(20)
+#time.sleep(20)
 
 # 1. get current txn count
 tx_count = commands.getoutput("grep \"totalTransactions =\" ./node1/iri.log  | tail -n 1 | awk '{print $25}'")
@@ -38,7 +38,7 @@ while 1:
         exit(0)
     else:
         counter += 1
-        if counter < 30:
+        if counter < 50:
             print "waiting for IOTA transaction count..."
         else:
             print "Error! transaction number added failed!"
