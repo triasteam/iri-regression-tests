@@ -12,7 +12,7 @@ else:
     print "Send milestone failed"
     exit(-1)
 
-time.sleep(40)
+time.sleep(80)
 
 # 1. get current txn count
 tx_count = commands.getoutput("grep \"totalTransactions =\" ./node1/iri.log  | tail -n 1 | awk '{print $25}'")
