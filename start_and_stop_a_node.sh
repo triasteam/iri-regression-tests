@@ -5,7 +5,10 @@
 #$4 - unpack DB?
 #$5 - number of nodes to load
 #$6 - python script
-#$7 - enable batch transactions?
+#$7 - enbale ipfs?
+#$8 - enable batch transactions?
+#$9 - enable transactions compression?
+
 
 echo "starting node"
 port=$2
@@ -47,11 +50,20 @@ do
     echo "start node.. mainnet on port: "$port
     fi
 
-    if [ -n "$7" ];
+    if [ -n "$8" ];
     then
-        if $7
+        cmdOpt=${cmdOpt}" --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote"
+        if $8
         then
-            cmdOpt=${cmdOpt}" --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote --batch-txns"
+            cmdOpt=${cmdOpt}" --batch-txns"
+        fi
+    fi
+
+    if [ -n "$9" ];
+    then
+        if $9
+        then
+            cmdOpt=${cmdOpt}" --compression-txns"
         fi
     fi
 
@@ -68,7 +80,7 @@ sleep 40
 if [ -n "$6" ];
 then
     echo "start python script.."
-    python $6 $2
+    python $6 $2 $7 $8 $9
     rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 fi
 
