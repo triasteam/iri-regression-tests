@@ -57,7 +57,7 @@ def stop_cli():
 # send transactions one by one
 def put_file(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"type": "trans","from_address": "i","to_address": "j","amount": "6"}\'')
+        ret = os.system('curl -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "i","to": "j","amnt": "6"}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -68,7 +68,7 @@ def put_file(txn_num=1):
 # send transactions in batches
 def put_cache(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"type": "trans","from_address": "i","to_address": "j","amount": "6"}\'')
+        ret = os.system('curl -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "i","to": "j","amnt": "6"}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -92,7 +92,7 @@ def check_transactions_count(old_tx_count, COUNT):
             return
         else:
             counter += 1
-            if counter < COUNT * 3:
+            if counter < COUNT:
                 print "waiting for IOTA transaction count..."
                 time.sleep(3)
             else:
