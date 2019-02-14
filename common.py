@@ -11,7 +11,7 @@ def send_milestone():
         print "Send milestone failed"
         exit(-1)
 
-    time.sleep(20)
+    time.sleep(10)
 
 
 def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
@@ -57,7 +57,7 @@ def stop_cli():
 # send transactions one by one
 def put_file(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "i","to": "j","amnt": "6"}\'')
+        ret = os.system('curl -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -68,7 +68,7 @@ def put_file(txn_num=1):
 # send transactions in batches
 def put_cache(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "i","to": "j","amnt": "6"}\'')
+        ret = os.system('curl -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -83,18 +83,15 @@ def get_transactions_count():
 
 
 def check_transactions_count(old_tx_count, COUNT):
-    counter = 0
-    while 1:
+    for i in range(30):
         new_tx_count = get_transactions_count()
         print "new_tx_count = ", new_tx_count
         if int(new_tx_count) == int(old_tx_count) + COUNT:
             print "IOTA transaction count added successfully"
             return
         else:
-            counter += 1
-            if counter < COUNT:
-                print "waiting for IOTA transaction count..."
-                time.sleep(3)
-            else:
-                print "Error! transaction number added failed!"
-                exit(-1)
+            print "waiting for IOTA transaction count..."
+            time.sleep(1)
+
+    print "Error! transaction number added failed!"
+    exit(-1)
