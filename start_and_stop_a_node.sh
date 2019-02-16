@@ -50,9 +50,17 @@ do
     echo "start node.. mainnet on port: "$port
     fi
 
-    if [ -n "$8" ];
+    if [ -n "$7" ];
     then
         cmdOpt=${cmdOpt}" --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote"
+        if [[ "$7" = "false" ]]
+        then
+            cmdOpt=${cmdOpt}" --ipfs-txns false"
+        fi
+    fi
+
+    if [ -n "$8" ];
+    then
         if $8
         then
             cmdOpt=${cmdOpt}" --batch-txns"

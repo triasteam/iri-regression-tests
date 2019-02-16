@@ -11,7 +11,7 @@ def send_milestone():
         print "Send milestone failed"
         exit(-1)
 
-    time.sleep(10)
+    time.sleep(8)
 
 
 def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
@@ -47,7 +47,7 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
     os.system("python ./app.py &> /tmp/app.log &")
     os.chdir(cur_dir)
 
-    time.sleep(20)
+    time.sleep(3)
 
 
 def stop_cli():
@@ -83,7 +83,7 @@ def get_transactions_count():
 
 
 def check_transactions_count(old_tx_count, COUNT):
-    for i in range(30):
+    for i in range(40):
         new_tx_count = get_transactions_count()
         print "new_tx_count = ", new_tx_count
         if int(new_tx_count) == int(old_tx_count) + COUNT:
