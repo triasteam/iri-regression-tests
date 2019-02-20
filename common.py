@@ -57,7 +57,7 @@ def stop_cli():
 # send transactions one by one
 def put_file(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
+        ret = os.system('curl -s -X POST http://127.0.0.1:5000/put_file -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -68,7 +68,7 @@ def put_file(txn_num=1):
 # send transactions in batches
 def put_cache(txn_num=1):
     for i in range(txn_num):
-        ret = os.system('curl -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
+        ret = os.system('curl -s -X POST   http://127.0.0.1:5000/put_cache -H \'Content-Type: application/json\' -H \'cache-control: no-cache\' -d \'{"from": "A","to": "j","amnt": 1}\'')
         if ret == 0:
             print "Send command successfully ", i
         else:
@@ -83,6 +83,7 @@ def get_transactions_count():
 
 
 def check_transactions_count(old_tx_count, COUNT):
+    new_tx_count = ""
     for i in range(40):
         new_tx_count = get_transactions_count()
         print "new_tx_count = ", new_tx_count
@@ -93,5 +94,5 @@ def check_transactions_count(old_tx_count, COUNT):
             print "waiting for IOTA transaction count..."
             time.sleep(1)
 
-    print "Error! transaction number added failed!"
+    print "Error! transaction number added failed:", old_tx_count, "+", COUNT, "!=", new_tx_count
     exit(-1)
