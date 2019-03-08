@@ -28,4 +28,6 @@ bash 7_send_transactions_without_ipfs_with_bach_without_compression-testnet.sh $
 
 bash 8_send_transactions_without_ipfs_with_bach_with_compression-testnet.sh $VER
 
+python failover_test_txn_count.py
+
 echo "finished running tests successfully"
