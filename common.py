@@ -16,6 +16,7 @@ def start_iota():
 
     time.sleep(8)
 
+
 # stop iota
 def stop_iota():
     p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
@@ -24,17 +25,6 @@ def stop_iota():
         if 'java -jar node1/iri' in line:
             pid = int(line.split()[1])
             os.kill(pid, signal.SIGKILL)
-
-# send milestone
-def send_milestone():
-    ret = os.system("java -jar ../../private-iota-testnet/target/iota-testnet-tools-0.1-SNAPSHOT-jar-with-dependencies.jar Coordinator localhost 14700")
-    if ret == 0:
-        print "Send milestone successfully"
-    else:
-        print "Send milestone failed"
-        exit(-1)
-
-    time.sleep(8)
 
 
 def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
