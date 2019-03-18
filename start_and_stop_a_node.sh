@@ -52,7 +52,7 @@ do
 
     if [ -n "$7" ];
     then
-        cmdOpt=${cmdOpt}" --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote"
+        cmdOpt=${cmdOpt}" --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote --enable-streaming-graph --entrypoint-selector-algorithm \"KATZ\" --tip-sel-algo \"CONFLUX\""
         if [[ "$7" = "false" ]]
         then
             cmdOpt=${cmdOpt}" --ipfs-txns false"
