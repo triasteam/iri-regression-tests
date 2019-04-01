@@ -52,7 +52,9 @@ do
 
     if [ -n "$7" ];
     then
-        cmdOpt=${cmdOpt}" --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\" --max-peers 40 --remote --enable-streaming-graph --entrypoint-selector-algorithm \"KATZ\" --tip-sel-algo \"CONFLUX\""
+        cmdOpt=${cmdOpt}" --snapshot=./Snapshot.txt --mwm 1 --walk-validator \"NULL\" --ledger-validator \"NULL\"
+                          --max-peers 40 --remote --enable-streaming-graph --entrypoint-selector-algorithm \"KATZ\"
+                          --tip-sel-algo \"CONFLUX\""
         if [[ "$7" = "false" ]]
         then
             cmdOpt=${cmdOpt}" --ipfs-txns false"
@@ -76,7 +78,8 @@ do
     fi
 
     echo "cmdOpt ="$cmdOpt
-    java -jar iri-$1.jar -p $port -u $port -t `expr $port + $5` -n 'udp://localhost:'`expr $port - 1`' udp://localhost:'`expr $port + 1` $cmdOpt &> iri.log &
+    java -jar iri-$1.jar -p $port -u $port -t `expr $port + $5` -n 'udp://localhost:'`expr $port - 1`' \
+            udp://localhost:'`expr $port + 1` $cmdOpt &> iri.log &
     echo $! > iri.pid
     cd ..
     ((port++))

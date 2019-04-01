@@ -7,7 +7,10 @@ import sh
 
 # start iota
 def start_iota():
-    status = os.system('java -jar node1/iri-1.5.5.jar -p 14700 -u 14700 -t 14701 -n udp://localhost:14699 udp://localhost:14701 --testnet --testnet-no-coo-validation --snapshot=./Snapshot.txt --mwm 1 --walk-validator "NULL" --ledger-validator "NULL" --max-peers 40 --remote --ipfs-txns false --batch-txns > node1/iri.log 2>&1 &')
+    status = os.system('java -jar node1/iri-1.5.5.jar -p 14700 -u 14700 -t 14701 '
+                       '-n udp://localhost:14699 udp://localhost:14701 --testnet --testnet-no-coo-validation '
+                       '--snapshot=./Snapshot.txt --mwm 1 --walk-validator "NULL" --ledger-validator "NULL" '
+                       '--max-peers 40 --remote --ipfs-txns false --batch-txns > node1/iri.log 2>&1 &')
     #print status, output
     if status != 0:
         print "Start IOTA failed: "
@@ -66,7 +69,6 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
 def stop_cli():
     os.system('ps -aux | grep "[p]ython ./app" | awk \'{print $2}\' | xargs kill -9')
     sh.mv("scripts/iota_api/conf.bak", "scripts/iota_api/conf")
-
 
 # send transactions one by one
 def put_file(txn_num=1):

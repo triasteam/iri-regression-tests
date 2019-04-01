@@ -21,7 +21,7 @@ else:
     enable_compression = False
 
 # 1. cli
-print("\nstart cli: enable_ipfs %r, enable_batch %r, enable_compression %r" % (enable_ipfs, enable_batch, enable_compression))
+print("\nstart cli: enable_ipfs %d, enable_batch %d, enable_compression %d" % (enable_ipfs, enable_batch, enable_compression))
 start_cli(enable_ipfs, enable_batch, enable_compression)
 
 # 2. tx count
