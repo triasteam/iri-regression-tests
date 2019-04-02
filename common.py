@@ -3,6 +3,7 @@ import time
 import commands
 import subprocess
 import signal
+import sh
 
 # start iota
 def start_iota():
@@ -27,10 +28,12 @@ def stop_iota():
 
 def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
     # change config
-    file="scripts/iota_api/conf"
-    os.system("cp scripts/iota_api/conf scripts/iota_api/conf.bak")
+    cur_dir = os.getcwd()
+
+    conf_file= "scripts/iota_api/conf"
+    sh.cp(conf_file, conf_file + ".bak")
     file_data = ""
-    with open(file, "r") as f:
+    with open(conf_file, "r") as f:
         for line in f:
             if "enableIpfs" in line:
                 if enable_ipfs == True:
@@ -50,11 +53,9 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
             else:
                 file_data += line
 
-    with open(file, "w") as f:
+    with open(conf_file, "w") as f:
         f.write(file_data)
 
-
-    cur_dir = os.getcwd()
     os.chdir("scripts/iota_api")
     os.system("python ./app.py > /tmp/app.log 2>&1 &")
     os.chdir(cur_dir)
@@ -64,7 +65,7 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
 
 def stop_cli():
     os.system('ps -aux | grep "[p]ython ./app" | awk \'{print $2}\' | xargs kill -9')
-    os.system("mv scripts/iota_api/conf.bak scripts/iota_api/conf")
+    sh.mv("scripts/iota_api/conf.bak", "scripts/iota_api/conf")
 
 
 # send transactions one by one
