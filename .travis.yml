@@ -52,5 +52,5 @@ script:
     && mvn clean compile
     && mvn package
     && cd ..
-  - VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9.]+')
+  - VERSION=1.5.5
   - bash run_all_stable_tests.sh $VERSION
