@@ -20,15 +20,13 @@ if sys.argv[4] == "true":
 else:
     enable_compression = False
 
-print enable_ipfs, enable_batch, enable_compression
-
 # 1. cli
-print("\nstart cli...")
+print("\nstart cli: enable_ipfs %r, enable_batch %r, enable_compression %r" % (enable_ipfs, enable_batch, enable_compression))
 start_cli(enable_ipfs, enable_batch, enable_compression)
 
 # 2. tx count
 tx_count = get_transactions_count()
-print("current tx count ", tx_count)
+print("current tx count is %d" % int(tx_count))
 
 # 3. put_cache
 if enable_batch:
@@ -42,7 +40,7 @@ put_file(TX_NUM)
 total_tx_num += TX_NUM
 
 # 5. check tx count
-print("\nchecking transaction count...")
+print("\n\nchecking transaction count...")
 check_transactions_count(tx_count, total_tx_num)
 
 # 6. stop cli
