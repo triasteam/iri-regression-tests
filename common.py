@@ -29,7 +29,7 @@ def stop_iota():
 
 def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
     # change config
-    file="../../scripts/iota_api/conf"
+    file="scripts/iota_api/conf"
     file_data = ""
     with open(file, "r") as f:
         for line in f:
@@ -56,7 +56,7 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False):
 
 
     cur_dir = os.getcwd()
-    os.chdir("../../scripts/iota_api")
+    os.chdir("scripts/iota_api")
     os.system("python ./app.py > /tmp/app.log 2>&1 &")
     os.chdir(cur_dir)
 
