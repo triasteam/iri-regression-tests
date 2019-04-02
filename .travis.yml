@@ -1,0 +1,57 @@
+language: java
+jdk:
+  - oraclejdk8
+  - openjdk8
+  - oraclejdk9
+
+cache:
+  apt: true
+  directories:
+    - $HOME/.m2
+
+sudo: required
+
+addons:
+  apt:
+    packages:
+      - jq
+
+matrix:
+  allow_failures:
+    - jdk: oraclejdk9
+
+install:
+  # install python env
+  - sudo apt-get install software-properties-common
+  - sudo apt-add-repository universe
+  - sudo add-apt-repository restricted
+  - sudo add-apt-repository multiverse
+  - sudo apt-get update
+  - sudo apt-get install python-pip
+  - sudo pip install ipfsapi
+  - sudo pip install flask
+  - sudo pip install pyOpenSSL
+  - sudo pip install pyota
+  - sudo pip install docker
+  - sudo pip install mock
+  - sudo pip install cryptography==2.5
+  - sudo pip install sh
+  # install ipfs
+  - wget https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-amd64.tar.gz
+    && tar xf go-ipfs_v0.4.18_linux-amd64.tar.gz
+    && cd go-ipfs/
+    && sudo ./install.sh
+    && cd ..
+
+before_script:
+  - ipfs init
+    && ipfs daemon &> /tmp/ipfs.log &
+
+script:
+  - git clone https://github.com/wunder3605/iri.git --depth 1
+  - cd iri
+    && mvn clean compile
+    && mvn package
+    && cd ..
+  - VERSION=1.5.5
+  - bash run_all_stable_tests.sh $VERSION
