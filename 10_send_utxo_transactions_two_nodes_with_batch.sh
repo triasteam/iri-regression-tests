@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "running test 10 testnet - Send transactions -- two nodes, with batch"
+echo "running test 9 testnet - Send transactions -- two nodes, without batch"
 
 set -e
 
@@ -17,7 +17,7 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --db-log-path "./db1.log" --neighbors "tcp://localhost:$((PORT2-100))" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
                         --ipfs-txns false --batch-txns --weight-calculation-algorithm "IN_MEM" \
-                        &>  streamnet1.log &
+                        &>  iri/node1/iri.log &
 
 sleep 1
 
@@ -26,7 +26,7 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --db-log-path "./db2.log" --neighbors "tcp://localhost:$((PORT1-100))" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
                        --ipfs-txns false --batch-txns --weight-calculation-algorithm "IN_MEM" \
-                        &>  streamnet2.log &
+                        &>  iri/node2/iri.log &
 
 sleep 1
 
@@ -34,11 +34,11 @@ sleep 1
 cd iri/scripts/iota_api
 cp conf conf.bak
 cp ../examples/two_nodes_batch/cli_conf_two_nodes_1 conf
-python app.py &> ${DIR}/cli1.log  &
+python app.py &> ${DIR}/iri/node1/app.log  &
 sleep 1
 
 cp ../examples/two_nodes_batch/cli_conf_two_nodes_2 conf
-python app.py &> ${DIR}/cli2.log  &
+python app.py &> ${DIR}/iri/node2/app.log  &
 
 cd ${DIR}
 
