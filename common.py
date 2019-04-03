@@ -60,7 +60,7 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False, no
         f.write(file_data)
 
     os.chdir("scripts/iota_api")
-    os.system("python ./app.py > %s/node%d/app.log 2>&1 &" % (cur_dir, node))
+    sh.python("./app.py", _out="%s/node%d/app.log" % (cur_dir, node), _bg=True)
     os.chdir(cur_dir)
 
     time.sleep(3)
@@ -90,7 +90,7 @@ def put_cache(txn_num=1):
 
 # get current txn count
 def get_transactions_count(node=1):
-    tx_count = commands.getoutput("grep -a \"totalTransactions =\" node%d/iri.log  | tail -n 1 | awk '{print $25}'" % node)
+    tx_count = sh.awk(sh.tail(sh.grep("-a", "totalTransactions =", "node%d/iri.log" % node), "-n", "1"), '{print $25}')
     return tx_count
 
 
