@@ -78,7 +78,7 @@ do
     fi
 
     echo "cmdOpt ="$cmdOpt
-    java -jar iri-$1.jar -p $port -u $port -t `expr $port + $5` -n 'udp://localhost:'`expr $port - 1`' udp://localhost:'`expr $port + 1` $cmdOpt &> /tmp/iri$i.log &
+    java -jar iri-$1.jar -p $port -u $port -t `expr $port + $5` -n 'udp://localhost:'`expr $port - 1`' udp://localhost:'`expr $port + 1` $cmdOpt &> iri.log &
     echo $! > iri.pid
     cd ..
     ((port++))
