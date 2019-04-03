@@ -55,3 +55,8 @@ script:
     && cd ..
   - VERSION=1.5.5
   - bash run_all_stable_tests.sh $VERSION
+
+after_failure:
+  - cat /tmp/app.log
+  - cat /tmp/ipfs.log
+  - cat /tmp/iri*.log
