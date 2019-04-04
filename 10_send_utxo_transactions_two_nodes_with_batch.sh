@@ -49,7 +49,7 @@ sleep 5
 # send transactions parallelly
 iri/scripts/examples/two_nodes_batch/parallel_put_txn_double_spend.sh
 
-sleep 15
+sleep 40
 
 # get the total balance
 total_1=0

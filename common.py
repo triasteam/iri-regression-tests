@@ -70,7 +70,13 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False, no
 
 
 def stop_cli():
-    os.system('ps -aux | grep "[p]ython ./app" | awk \'{print $2}\' | xargs kill -9')
+    p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
+    out, err = p.communicate()
+    for line in out.splitlines():
+        if ('app.py') in line:
+            pid = int(line.split()[1])
+            os.kill(pid, signal.SIGKILL)
+
     sh.mv("scripts/iota_api/conf.bak", "scripts/iota_api/conf")
 
 # send transactions one by one
