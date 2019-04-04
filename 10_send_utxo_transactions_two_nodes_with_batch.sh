@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "running test 9 testnet - Send transactions -- two nodes, without batch"
+echo "running test 10 testnet - Send transactions -- two nodes, without batch"
 
 set -e
 
@@ -10,6 +10,8 @@ DIR=$PWD
 
 # clear
 rm -rf db*
+
+mkdir -p iri/node1 iri/node2
 
 # start iota
 java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --ledger-validator "NULL" -p ${PORT1} \

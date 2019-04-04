@@ -7,10 +7,12 @@ import sh
 
 # start iota
 def start_iota(node=1):
-    status = os.system('java -jar node%d/iri-1.5.5.jar -p 14700 -u 14700 -t 14701 '
-                       '-n udp://localhost:14699 udp://localhost:14701 --testnet --testnet-no-coo-validation '
-                       '--snapshot=./Snapshot.txt --mwm 1 --walk-validator "NULL" --ledger-validator "NULL" '
-                       '--max-peers 40 --remote --ipfs-txns false --batch-txns > node%d/iri.log 2>&1 &' % (node, node))
+    jar_file = "node%d/iri-1.5.5.jar" % (node)
+    log_file = "node%d/iri.log" % (node)
+    status = sh.java("-jar", jar_file, "-p", "14700", "-u", "14700", "-t", "14701",
+                     "-n", "udp://localhost:14699", "udp://localhost:14701", "--testnet", "--testnet-no-coo-validation",
+                     "--snapshot=./Snapshot.txt", "--mwm", "1", "--walk-validator", "NULL", "--ledger-validator", "NULL",
+                     "--max-peers", "40", "--remote", "--ipfs-txns", "false", "--batch-txns", _out=log_file, _bg=True)
     #print status, output
     if status != 0:
         print "Start IOTA failed: "
@@ -60,7 +62,8 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False, no
         f.write(file_data)
 
     os.chdir("scripts/iota_api")
-    sh.python("./app.py", _out="%s/node%d/app.log" % (cur_dir, node), _bg=True)
+    log_file = "%s/node%d/app.log" % (cur_dir, node)
+    sh.python("./app.py", _out=log_file, _bg=True)
     os.chdir(cur_dir)
 
     time.sleep(3)
@@ -90,7 +93,8 @@ def put_cache(txn_num=1):
 
 # get current txn count
 def get_transactions_count(node=1):
-    tx_count = sh.awk(sh.tail(sh.grep("-a", "totalTransactions =", "node%d/iri.log" % node), "-n", "1"), '{print $25}')
+    log_file = "node%d/iri.log" % node
+    tx_count = sh.awk(sh.tail(sh.grep("-a", "totalTransactions =", log_file), "-n", "1"), '{print $25}')
     return tx_count
 
 
