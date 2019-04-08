@@ -50,12 +50,14 @@ before_script:
 script:
   - git clone https://github.com/wunder3605/iri.git --depth 1
   - cd iri
-    && mvn clean compile
-    && mvn package
-    && cd ..
+  - git log
+  - mvn clean compile > compile.log
+  - mvn package >> compile.log
+  - cd ..
   - VERSION=1.5.5
   - bash run_all_stable_tests.sh $VERSION
 
 after_failure:
+  - cat iri/compile.log
   - for (( i=1; i<=5; i++)) do if [ -d iri/node$i ] ; then echo && echo "node" $i "app.log >>>" && cat iri/node$i/app.log; echo && echo "node" $i "iota.log >>>" && cat iri/node$i/iri.log; fi; done
   - cat /tmp/ipfs.log
