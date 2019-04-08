@@ -18,7 +18,7 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --udp-receiver-port $((PORT1-100)) --tcp-receiver-port $((PORT1-100)) --db-path "./db1" \
                         --db-log-path "./db1.log" --neighbors "tcp://localhost:$((PORT2-100))" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
-                        --ipfs-txns false --weight-calculation-algorithm "IN_MEM" \
+                        --ipfs-txns false --batch-txns --weight-calculation-algorithm "IN_MEM" \
                         &>  iri/node1/iri.log &
 
 sleep 1
@@ -27,7 +27,7 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --udp-receiver-port $((PORT2-100)) --tcp-receiver-port $((PORT2-100)) --db-path "./db2" \
                         --db-log-path "./db2.log" --neighbors "tcp://localhost:$((PORT1-100))" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
-                       --ipfs-txns false --weight-calculation-algorithm "IN_MEM" \
+                       --ipfs-txns false --batch-txns --weight-calculation-algorithm "IN_MEM" \
                         &>  iri/node2/iri.log &
 
 sleep 1
