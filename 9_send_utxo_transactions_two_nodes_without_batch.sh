@@ -34,19 +34,13 @@ sleep 1
 
 # start cli
 cd iri/scripts/iota_api
-cat conf
 cp conf conf.bak
 cp ../examples/two_nodes/cli_conf_two_nodes_1 conf
-sed -i "s/5000/8888/g" conf
-echo "1111"
-cat conf
 python app.py &> ${DIR}/iri/node1/app.log  &
+
 sleep 10
 
 cp ../examples/two_nodes/cli_conf_two_nodes_2 conf
-echo "2222"
-sed -i "s/6000/6666/g" conf
-cat conf
 python app.py &> ${DIR}/iri/node2/app.log  &
 
 cd ${DIR}
@@ -54,9 +48,7 @@ cd ${DIR}
 sleep 5
 
 # send transactions parallelly
-cp iri/scripts/examples/two_nodes/parallel_put_txn_double_spend.sh .
-sed -i -e "s/6000/6666/g"  -e "s/5000/8888/g" parallel_put_txn_double_spend.sh
-bash parallel_put_txn_double_spend.sh
+bash iri/scripts/examples/two_nodes/parallel_put_txn_double_spend.sh
 
 sleep 40
 
@@ -68,8 +60,8 @@ declare -A balances_2
 FLAG="false"
 for account in {a..z} {A..Z}
 do
-    balances_1[$account]=$(curl -s -X GET http://127.0.0.1:6666/get_balance -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d "{\"account\": \"$account\"}")
-    balances_2[$account]=$(curl -s -X GET http://127.0.0.1:8888/get_balance -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d "{\"account\": \"$account\"}")
+    balances_1[$account]=$(curl -s -X GET http://127.0.0.1:5000/get_balance -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d "{\"account\": \"$account\"}")
+    balances_2[$account]=$(curl -s -X GET http://127.0.0.1:6000/get_balance -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d "{\"account\": \"$account\"}")
     total_1=$((total_1+balances_1[$account]))
     total_2=$((total_2+balances_2[$account]))
     if [ ${balances_1[$account]} != ${balances_2[$account]} ] ; then

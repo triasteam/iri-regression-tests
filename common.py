@@ -66,18 +66,13 @@ def start_cli(enable_ipfs=True, enable_batch=False, enable_compression=False, no
 
 
 def stop_cli():
-    p = sh.netstat("-ntulp")
-    print("before stop_cli: 5000 port: ")
-    print(p)
     p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
     out, err = p.communicate()
     for line in out.splitlines():
         if ('app.py') in line:
             pid = int(line.split()[1])
             os.kill(pid, signal.SIGKILL)
-    p = sh.netstat("-ntulp")
-    print("after stop_cli: 5000 port: ")
-    print(p)
+
     sh.mv("scripts/iota_api/conf.bak", "scripts/iota_api/conf")
 
 # send transactions one by one
