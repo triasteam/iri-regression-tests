@@ -51,8 +51,8 @@ script:
   - git clone https://github.com/wunder3605/iri.git --depth 1
   - cd iri
   - git log
-  - mvn clean compile > compile.log
-  - mvn package >> compile.log
+  - mvn clean compile &> compile.log
+  - mvn package &>> compile.log
   - cd ..
   - VERSION=1.5.5
   - bash run_all_stable_tests.sh $VERSION
