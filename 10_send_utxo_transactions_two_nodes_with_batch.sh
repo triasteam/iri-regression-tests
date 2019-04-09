@@ -53,7 +53,7 @@ cd ${DIR}
 sleep 5
 
 # send transactions parallelly
-iri/scripts/examples/two_nodes_batch/parallel_put_txn_double_spend.sh
+cp iri/scripts/examples/two_nodes_batch/parallel_put_txn_double_spend.sh .
 sed -i -e "s/6000/6666/g"  -e "s/5000/8888/g" parallel_put_txn_double_spend.sh
 bash parallel_put_txn_double_spend.sh
 
