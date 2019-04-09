@@ -9,14 +9,10 @@ import sh
 def start_iota(node=1):
     jar_file = "node%d/iri-1.5.5.jar" % (node)
     log_file = "node%d/iri.log" % (node)
-    status = sh.java("-jar", jar_file, "-p", "14700", "-u", "14700", "-t", "14701",
+    _status = sh.java("-jar", jar_file, "-p", "14700", "-u", "14700", "-t", "14701",
                      "-n", "udp://localhost:14699", "udp://localhost:14701", "--testnet", "--testnet-no-coo-validation",
                      "--snapshot=./Snapshot.txt", "--mwm", "1", "--walk-validator", "NULL", "--ledger-validator", "NULL",
                      "--max-peers", "40", "--remote", "--ipfs-txns", "false", "--batch-txns", _out=log_file, _bg=True)
-    #print status, output
-    if status != 0:
-        print "Start IOTA failed: "
-        exit(-1)
 
     time.sleep(8)
 

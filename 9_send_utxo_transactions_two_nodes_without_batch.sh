@@ -34,6 +34,7 @@ sleep 1
 
 # start cli
 cd iri/scripts/iota_api
+cat conf
 cp conf conf.bak
 cp ../examples/two_nodes/cli_conf_two_nodes_1 conf
 sed -i "s/5000/8888/g" conf
