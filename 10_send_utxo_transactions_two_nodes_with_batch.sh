@@ -40,7 +40,7 @@ sed -i "s/5000/8888/g" conf
 echo "1111"
 cat conf
 python app.py &> ${DIR}/iri/node1/app.log  &
-sleep 1
+sleep 10
 
 cp ../examples/two_nodes_batch/cli_conf_two_nodes_2 conf
 echo "2222"
