@@ -1,5 +1,5 @@
 import sys
-from common import send_milestone, get_transactions_count, start_cli, put_cache, put_file, check_transactions_count, stop_cli
+from common import get_transactions_count, start_cli, put_cache, put_file, check_transactions_count, stop_cli
 
 TX_NUM = 100
 total_tx_num = 0
@@ -20,35 +20,29 @@ if sys.argv[4] == "true":
 else:
     enable_compression = False
 
-print enable_ipfs, enable_batch, enable_compression
-
-# 1. milestone
-print("\nsending milestone...")
-send_milestone()
-
-# 2. cli
-print("\nstart cli...")
+# 1. cli
+print("\nstart cli: enable_ipfs %d, enable_batch %d, enable_compression %d" % (enable_ipfs, enable_batch, enable_compression))
 start_cli(enable_ipfs, enable_batch, enable_compression)
 
-# 3. tx count
+# 2. tx count
 tx_count = get_transactions_count()
-print("current tx count ", tx_count)
+print("current tx count is %d" % int(tx_count))
 
-# 4. put_cache
+# 3. put_cache
 if enable_batch:
     print("\nstart put_cache...")
     put_cache(TX_NUM)
     total_tx_num += TX_NUM
 
-# 5. put_file
+# 4. put_file
 print("\nstart put_file...")
 put_file(TX_NUM)
 total_tx_num += TX_NUM
 
-# 6. check tx count
-print("\nchecking transaction count...")
+# 5. check tx count
+print("\n\nchecking transaction count...")
 check_transactions_count(tx_count, total_tx_num)
 
-# 7. stop cli
+# 6. stop cli
 print("\nstopping cli...")
 stop_cli()
