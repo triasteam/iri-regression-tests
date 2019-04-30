@@ -87,12 +87,12 @@ else
     echo "    FLAG = " $FLAG
     echo "    total of node1" ${total_1}
     echo "    total of node2" ${total_2}
-    curl http://localhost:5000/get_utxo -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
-    curl http://localhost:6000/get_utxo -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
-    curl http://localhost:5000/get_dag -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
-    curl http://localhost:6000/get_dag -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
-    curl http://localhost:5000/get_total_order -X GET -H "Content-Type: application/json"
-    curl http://localhost:6000/get_total_order -X GET -H "Content-Type: application/json"
+    curl -s http://localhost:5000/get_utxo -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
+    curl -s http://localhost:6000/get_utxo -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
+    curl -s http://localhost:5000/get_dag -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
+    curl -s http://localhost:6000/get_dag -X GET -H "Content-Type: application/json" -d "{\"type\":\"DOT\"}"
+    curl -s http://localhost:5000/get_total_order -X GET -H "Content-Type: application/json"
+    curl -s http://localhost:6000/get_total_order -X GET -H "Content-Type: application/json"
 
     # stop iota and cli
     ps -aux | grep "[p]ython app.py" | awk '{print $2}' | xargs kill -9
