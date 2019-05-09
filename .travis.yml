@@ -48,7 +48,7 @@ before_script:
     && ipfs daemon &> /tmp/ipfs.log &
 
 script:
-  - git clone https://github.com/wunder3605/iri.git --depth 1
+  - git clone https://github.com/triasteam/iri.git --depth 1
   - cd iri
   - git log
   - mvn clean compile &> compile.log
