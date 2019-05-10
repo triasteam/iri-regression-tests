@@ -6,7 +6,6 @@ set -e
 PORT1=14700
 PORT2=13700
 
-DIR=$PWD
 
 # clear
 rm -rf db*
@@ -26,6 +25,7 @@ sleep 1
 echo "iota install success"
 # run main.go
     cd  iri/scripts/front_end/server
+    go get -d -v ./...
     sleep 1
     go run main.go &
     sleep 2
