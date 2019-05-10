@@ -32,7 +32,7 @@ bash 9_send_utxo_transactions_two_nodes_without_batch.sh
 
 bash 10_send_utxo_transactions_two_nodes_with_batch.sh
 
-bash 11_vue_interface-test.sh
+bash 11_vue_interface_test.sh
 
 python failover_test_txn_count.py
 
