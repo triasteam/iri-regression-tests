@@ -10,8 +10,6 @@ PORT2=13700
 # clear
 rm -rf db*
 
-rm -rf iri/node1
-
 mkdir -p iri/node1
 
 # start iota
