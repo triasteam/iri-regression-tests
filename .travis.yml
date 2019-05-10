@@ -36,6 +36,7 @@ install:
   - sudo pip install mock
   - sudo pip install cryptography==2.5
   - sudo pip install sh
+  - sudo pip install six --upgrade
   # install ipfs
   - wget https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-amd64.tar.gz
     && tar xf go-ipfs_v0.4.18_linux-amd64.tar.gz
@@ -48,7 +49,7 @@ before_script:
     && ipfs daemon &> /tmp/ipfs.log &
 
 script:
-  - git clone https://github.com/wunder3605/iri.git --depth 1
+  - git clone https://github.com/triasteam/iri.git --depth 1
   - cd iri
   - git log
   - mvn clean compile &> compile.log
