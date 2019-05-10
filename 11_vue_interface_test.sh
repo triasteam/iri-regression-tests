@@ -36,8 +36,8 @@ q=10
 for ((i=1;i<=3;i++));
 do
     d1=$i
-    d2=`expr $k + $i`
-    d3=`expr $i \* $q + $k`
+    d2=$(($k + $i))
+    d3=$(($i * $q + $k))
     result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.${d2}\",\"Attestee\":\"192.168.130.${d3}\",\"Score\":\"${d1}\"}")
     echo $result
     touch res.txt
