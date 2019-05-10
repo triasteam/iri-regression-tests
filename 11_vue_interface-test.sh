@@ -46,7 +46,18 @@ echo "go install success"
       exit -1
   fi
 
-  result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.102\",\"Attestee\":\"192.168.130.120\",\"Score\":\"1\"}")
+  result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.102\",\"Attestee\":\"192.168.130.120\",\"Score\":\"2\"}")
+  echo $result >res.txt
+  a=$(awk -F [:,] '{ print $2 }' res.txt)
+  if [ $a -eq 1 ];
+  then
+      echo "AddNode test success"
+  else
+      echo "Wrong!"
+  exit -1
+  fi
+
+  result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.103\",\"Attestee\":\"192.168.130.130\",\"Score\":\"3\"}")
   echo $result >res.txt
   a=$(awk -F [:,] '{ print $2 }' res.txt)
   if [ $a -eq 1 ];
@@ -71,9 +82,12 @@ echo "go install success"
          exit -1
      fi
 # stop iota and cli
-  #ps -aux | grep "[g]o run main.go" | awk '{print $2}' | xargs kill -9
   ps -aux | grep "[g]o-build" | awk '{print $2}' | xargs kill -9
   ps -aux | grep "[j]ava -jar iri" | awk '{print $2}' | xargs kill -9
+
+  sleep 1
+# return iri dir
+   cd ../../../../
 
 echo "run over"
 
