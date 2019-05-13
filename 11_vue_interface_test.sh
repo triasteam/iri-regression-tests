@@ -37,27 +37,27 @@ do
     score=$i
     attester=$((ip_random1 + i))
     attestee=$((i * ip_random2 + ip_random1))
-    result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.${attester}\",\"Attestee\":\"192.168.130.${attestee}\",\"Score\":\"${score}\"}")
-    echo $result
+    result=$(curl -s -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.${attester}\",\"Attestee\":\"192.168.130.${attestee}\",\"Score\":\"${score}\"}")
     code1=$(echo $result | sed -e 's/[{}]/''/g' | sed s/\"//g | awk -v RS=',' -F: '$1=="Code"{print $2}')
     if [ $code1 -eq 1 ];
     then
-        echo "AddNode test success"
+        echo "AddNode test${i} success"
     else
         echo "Wrong!"
+        echo $result
         exit -1
     fi
 done
 
 # send request QueryNodes
-nodes=$(curl -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
-echo $nodes
+nodes=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
 code2=$(echo $nodes | sed -e 's/[{}]/''/g' | sed s/\"//g | awk -v RS=',' -F: '$1=="Code"{print $2}')
     if [ $code2 -eq 1 ];
     then
         echo "QueryNodes test success"
     else
         echo "Wrong!"
+        echo $nodes
         exit -1
     fi
 # stop iota and cli
