@@ -36,13 +36,11 @@ q=10
 for ((i=1;i<=3;i++));
 do
     d1=$i
-    d2=$(($k + $i))
-    d3=$(($i * $q + $k))
+    d2=$((k + i))
+    d3=$((i * q + k))
     result=$(curl  -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"192.168.130.${d2}\",\"Attestee\":\"192.168.130.${d3}\",\"Score\":\"${d1}\"}")
     echo $result
-    touch res.txt
-    echo $result >res.txt
-    a=$(awk -F [:,] '{ print $2 }' res.txt)
+    a=$(echo $result | sed -e 's/[{}]/''/g' | sed s/\"//g | awk -v RS=',' -F: '$1=="Code"{print $2}')
     if [ $a -eq 1 ];
     then
         echo "AddNode test success"
@@ -55,8 +53,7 @@ done
 # send request QueryNodes
    nodes=$(curl -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
    echo $nodes
-   echo $nodes >res.txt
-   b=$(awk -F [:,] '{ print $2 }' res.txt)
+   b=$(echo $nodes | sed -e 's/[{}]/''/g' | sed s/\"//g | awk -v RS=',' -F: '$1=="Code"{print $2}')
    if [ $b -eq 1 ];
        then
            echo "QueryNodes test success"
