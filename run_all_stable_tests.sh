@@ -18,9 +18,9 @@ bash 2_start_and_stop_a_node_known_database-testnet.sh $VER
 
 bash 3_create_a_transaction_on_Node_A_and_find_it_in_Node_B.sh $VER
 
-bash 4_send_transactions_with_ipfs_without_batch_without_compression-testnet.sh $VER
+# bash 4_send_transactions_with_ipfs_without_batch_without_compression-testnet.sh $VER
 
-bash 5_send_transactions_with_ipfs_with_batch_without_compression-testnet.sh $VER
+# bash 5_send_transactions_with_ipfs_with_batch_without_compression-testnet.sh $VER
 
 bash 6_send_transactions_without_ipfs_without_bach_without_compression-testnet.sh $VER
 
