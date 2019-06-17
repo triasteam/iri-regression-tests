@@ -28,7 +28,7 @@ sleep 2
 echo "go install success"
 sleep 2
 
-# send request AddNode_1
+#send request AddNode_1
 attester_1=192.168.130.101
 attestee_1=192.168.130.110
 score_1=1
@@ -51,10 +51,13 @@ curl -s -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json'
 result2=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
 echo $result2
 echo $result2 >> result.txt
-array=$(awk -F '[:,"]' '{$1="";print $0}' result.txt)
+array=($(awk -F '[:,"]' '{$1="";print $0}' result.txt))
+arrayLength=${#array[@]}
+lastData=${array[$((arrayLength -1))]}
+
 rm -rf result.txt
 
-# determine whether to include
+#determine whether to include
 function contains()
 {
 for i in ${array[@]}
@@ -63,7 +66,7 @@ do
     then
         echo "$1 query success"
         break
-    elif [ $i == score ]
+    elif [ $i == $lastData ]
         then
         echo "Wrong"
         echo "$1 query failed"
