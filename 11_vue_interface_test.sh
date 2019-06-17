@@ -28,7 +28,7 @@ sleep 2
 echo "go install success"
 sleep 2
 
-# send request AddNode
+# send request AddNode_1
 attester_1=192.168.130.101
 attestee_1=192.168.130.110
 score_1=1
@@ -41,7 +41,7 @@ result1=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:appl
 echo $result1
 echo $result1 > result.txt
 
-#send request QueryNodes
+#send request AddNode_2
 attester_2=192.168.130.110
 attestee_2=192.168.130.112
 score_2=2
