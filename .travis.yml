@@ -1,7 +1,7 @@
 language: java
 jdk:
-  - oraclejdk8
-#  - openjdk8
+# - oraclejdk8
+  - openjdk8
 #  - oraclejdk9
 
 cache:
@@ -26,7 +26,7 @@ install:
   - sudo apt-get install python-pip
   - sudo pip install ipfsapi
   - sudo pip install flask
-  - sudo pip install pyOpenSSL
+  - sudo pip install -U pyOpenSSL
   - sudo pip install pyota
   - sudo pip install docker
   - sudo pip install mock
