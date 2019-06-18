@@ -46,7 +46,7 @@ python app.py &> ${DIR}/iri/node2/app.log  &
 
 cd ${DIR}
 
-sleep 5
+#sleep 5
 
 # start nginx
 sed -i -e "s/LOCAL_IP/localhost/g" iri/scripts/iota_perf/nginx.conf
@@ -54,26 +54,15 @@ sudo cp iri/scripts/iota_perf/nginx.conf /etc/nginx/
 sudo nginx -s reload
 
 # start jmeter
+#
+# It will check the result in 'run_perf.sh'
+#
 cd iri/scripts/iota_perf
 bash -x ./run_perf.sh
+cd ${DIR}
 
 # stop iota and cli
 ps -aux | grep "[p]ython app.py" | awk '{print $2}' | xargs kill -9
 ps -aux | grep "[j]ava -jar iri" | awk '{print $2}' | xargs kill -9
 mv iri/scripts/iota_api/conf.bak iri/scripts/iota_api/conf
 
-# check
-diff order1 order2
-if [ $? != 0 ]; then
-    echo "Failed! order is not equal!"
-    echo "cat order1"
-    cat order1
-    echo
-    echo "cat order2"
-    cat order2
-    exit -1
-else
-    echo "Genesis forward is OK!"
-fi
-
-cd ${DIR}
