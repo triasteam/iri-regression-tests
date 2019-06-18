@@ -50,8 +50,7 @@ install:
 
 
 before_script:
-  - ipfs init
-    && ipfs daemon &> /tmp/ipfs.log &
+  -
 
 script:
   - git clone https://github.com/triasteam/iri.git --depth 1
@@ -66,4 +65,3 @@ script:
 after_failure:
   - cat iri/compile.log
   - for (( i=1; i<=5; i++)) do if [ -d iri/node$i ] ; then echo && echo "node" $i "app.log >>>" && cat iri/node$i/app.log; echo && echo "node" $i "iota.log >>>" && cat iri/node$i/iri.log; fi; done
-  - cat /tmp/ipfs.log
