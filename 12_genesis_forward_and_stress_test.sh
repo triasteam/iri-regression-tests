@@ -58,7 +58,7 @@ sudo nginx -s reload
 # It will check the result in 'run_perf.sh'
 #
 cd iri/scripts/iota_perf
-bash -x ./run_perf.sh
+./run_perf.sh
 cd ${DIR}
 
 # stop iota and cli
