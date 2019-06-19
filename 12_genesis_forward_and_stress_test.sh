@@ -55,6 +55,8 @@ sed -i -e "s/LOCAL_IP/localhost/g" iri/scripts/iota_perf/nginx.conf
 sudo cp iri/scripts/iota_perf/nginx.conf /etc/nginx/
 sudo nginx -s reload
 
+sleep 10
+
 # start jmeter
 #
 # It will check the result in 'run_perf.sh'
