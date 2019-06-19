@@ -37,11 +37,13 @@ sleep 1
 cd iri/scripts/iota_api
 cp conf conf.bak
 cp ../examples/two_nodes/cli_conf_two_nodes_1 conf
+sed -i "s/enableBatching = False/enableBatching = True/g" conf
 python app.py &> ${DIR}/iri/node1/app.log  &
 
 sleep 10
 
 cp ../examples/two_nodes/cli_conf_two_nodes_2 conf
+sed -i "s/enableBatching = False/enableBatching = True/g" conf
 python app.py &> ${DIR}/iri/node2/app.log  &
 
 cd ${DIR}
