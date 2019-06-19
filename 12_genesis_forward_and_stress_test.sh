@@ -19,7 +19,6 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --db-log-path "./db1.log" --neighbors "tcp://localhost:$((PORT2-100))" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
                         --ipfs-txns false --batch-txns true --weight-calculation-algorithm "IN_MEM" \
-                        --ancestor-forward-enable true --ancestor-create-frequency 1000 \
                         &>  iri/node1/iri.log &
 
 sleep 1
