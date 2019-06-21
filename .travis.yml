@@ -15,6 +15,7 @@ addons:
   apt:
     packages:
       - jq
+      - nginx
 
 install:
   # install python env
@@ -34,19 +35,22 @@ install:
   - sudo pip install sh
   - sudo pip install six --upgrade
   - sudo pip install ecdsa
-  # install ipfs
-  - wget https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-amd64.tar.gz
-    && tar xf go-ipfs_v0.4.18_linux-amd64.tar.gz
-    && cd go-ipfs/
-    && sudo ./install.sh
-    && cd ..
   # update go version
   - gimme 1.11.5
   - source ~/.gimme/envs/go1.11.5.env
+  # install jmeter
+  - wget -c https://github.com/triasteam/utils/raw/master/software/apache-jmeter-5.1.1.zip
+    && mv apache-jmeter-5.1.1.zip /opt
+    && cd /opt
+    && unzip apache-jmeter-5.1.1.zip
+    && export JMETER_HOME=/opt/apache-jmeter-5.1.1
+    && export CLASSPATH=$CLASSPATH:$JMETER_HOME/lib
+    && export PATH=$PATH:$JMETER_HOME/bin
+    && cd -
+
 
 before_script:
-  - ipfs init
-    && ipfs daemon &> /tmp/ipfs.log &
+  -
 
 script:
   - git clone https://github.com/triasteam/iri.git --depth 1
@@ -61,4 +65,3 @@ script:
 after_failure:
   - cat iri/compile.log
   - for (( i=1; i<=5; i++)) do if [ -d iri/node$i ] ; then echo && echo "node" $i "app.log >>>" && cat iri/node$i/app.log; echo && echo "node" $i "iota.log >>>" && cat iri/node$i/iri.log; fi; done
-  - cat /tmp/ipfs.log

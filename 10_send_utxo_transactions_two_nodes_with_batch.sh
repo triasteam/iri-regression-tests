@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "running test 10 testnet - Send transactions -- two nodes, without batch"
+echo "running test 10 testnet - Send transactions -- two nodes, with batch"
 
 set -e
 

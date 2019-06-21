@@ -34,6 +34,8 @@ bash 10_send_utxo_transactions_two_nodes_with_batch.sh
 
 bash 11_vue_interface_test.sh
 
+bash -x 12_genesis_forward_and_stress_test.sh
+
 python failover_test_txn_count.py
 
 echo "finished running tests successfully"
