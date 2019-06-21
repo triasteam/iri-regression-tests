@@ -16,7 +16,7 @@ java -jar iri/target/iri-1.5.5.jar --testnet --mwm 1 --walk-validator "NULL" --l
                         --db-log-path "./db1.log" --max-peers 40 --remote \
                         --enable-streaming-graph --entrypoint-selector-algorithm "KATZ" --tip-sel-algo "CONFLUX" \
                         --ipfs-txns false --batch-txns --weight-calculation-algorithm "IN_MEM" \
-                        &>  iri/node1/iri1.log &
+                        &>  iri/node1/iri.log &
 sleep 1
 echo "iota install success"
 # run main.go
@@ -32,6 +32,8 @@ sleep 2
 attester_1=192.168.130.101
 attestee_1=192.168.130.110
 score_1=1
+res_score1=0.649134991926838
+res_score2=0.350865008073162
 touch result.txt
 curl -s -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"${attester_1}\",\"Attestee\":\"${attestee_1}\",\"Score\":\"${score_1}\"}"
 
@@ -40,33 +42,18 @@ result1=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:appl
 
 echo $result1
 echo $result1 > result.txt
-
-#send request AddNode_2
-attester_2=192.168.130.110
-attestee_2=192.168.130.112
-score_2=2
-curl -s -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"${attester_2}\",\"Attestee\":\"${attestee_2}\",\"Score\":\"${score_2}\"}"
-
-#send request QueryNodes
-result2=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
-echo $result2
-echo $result2 >> result.txt
-array=($(awk -F '[:,"]' '{$1="";print $0}' result.txt))
-arrayLength=${#array[@]}
-lastData=${array[$((arrayLength -1))]}
-
-rm -rf result.txt
+array=($(awk -F '[:,"}]' '{$1="";print $0}' result.txt))
 
 #determine whether to include
 function contains()
 {
-for i in ${array[@]}
+for((i=0;i<${#array[@]};i++))
 do
-    if [ $i == $1 ]
+    if [ "${array[$((i))]}" == "$1" ] && [ "${array[$((i += 2))]}" == "$2" ]
     then
         echo "$1 query success"
         break
-    elif [ $i == $lastData ]
+    elif [ $i == $((${#array[@]} - 1)) ]
         then
         echo "Wrong"
         echo "$1 query failed"
@@ -78,10 +65,31 @@ do
     fi
 done
 }
-contains $attester_1
-contains $attestee_1
-contains $attester_2
-contains $attestee_2
+
+#test AddNode_1
+contains $attester_1 $res_score2
+contains $attestee_1 $res_score1
+
+#send request AddNode_2
+attester_2=192.168.130.110
+attestee_2=192.168.130.112
+score_2=2
+res_score1=0.350865008073162
+res_score2=0.649134991926838
+curl -s -X POST http://127.0.0.1:8000/AddNode -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"Attester\":\"${attester_2}\",\"Attestee\":\"${attestee_2}\",\"Score\":\"${score_2}\"}"
+
+#send request QueryNodes
+result2=$(curl -s -X POST http://127.0.0.1:8000/QueryNodes -H 'Content-Type:application/json' -H 'cache-control: no-cache' -d "{\"period\":1,\"numRank\":100}")
+echo $result2
+echo $result2 > result.txt
+array=($(awk -F '[:,"}]' '{$1="";print $0}' result.txt))
+echo ${array[@]}
+rm -rf result.txt
+
+#test AddNode_2
+contains $attester_2 $res_score2
+contains $attestee_2 $res_score1
+
 
 # stop iota and cli
 ps -aux | grep "[g]o-build" | awk '{print $2}' | xargs kill -9
