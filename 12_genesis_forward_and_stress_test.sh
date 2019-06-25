@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 echo "running test 12 testnet - genensis forward with stress test"
 
+wget -c https://github.com/triasteam/utils/raw/master/software/apache-jmeter-5.1.1.zip
+   && mv apache-jmeter-5.1.1.zip /opt
+   && cd /opt
+   && unzip apache-jmeter-5.1.1.zip
+   && export JMETER_HOME=/opt/apache-jmeter-5.1.1
+   && export CLASSPATH=$CLASSPATH:$JMETER_HOME/lib
+   && export PATH=$PATH:$JMETER_HOME/bin
+   && cd -
+
 set -e
 
 PORT1=14700
