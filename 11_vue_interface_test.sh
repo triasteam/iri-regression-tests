@@ -21,6 +21,8 @@ sleep 1
 echo "iota install success"
 # run main.go
 cd  iri/scripts/front_end/server
+mkdir -p $GOPATH/src/StreamNet/scripts/front_end/server
+cp vue $GOPATH/src/StreamNet/scripts/front_end/server/ -rf
 go get -d -v ./...
 sleep 1
 go run main.go &
