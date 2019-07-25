@@ -25,7 +25,7 @@ mkdir -p $GOPATH/src/StreamNet/scripts/front_end/server
 cp vue $GOPATH/src/StreamNet/scripts/front_end/server/ -rf
 go get -d -v ./...
 sleep 1
-go run main.go &
+go run main.go -host http://127.0.0.1:14700 &
 sleep 2
 echo "go install success"
 sleep 2
