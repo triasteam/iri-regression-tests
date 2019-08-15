@@ -36,6 +36,8 @@ bash 11_vue_interface_test.sh
 
 bash -x 12_genesis_forward_and_stress_test.sh
 
+bash 13_add_tee_with_privilege_control.sh
+
 python failover_test_txn_count.py
 
 echo "finished running tests successfully"
