@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # clean tx data
 rm -rf testnetdb*
 rm -rf ixi
