@@ -32,7 +32,8 @@ bash 8_send_transactions_without_ipfs_with_bach_with_compression-testnet.sh $VER
 
 #bash 10_send_utxo_transactions_two_nodes_with_batch.sh
 
-bash 11_vue_interface_test.sh
+# fixme need to install trias-ca-go-sdk 
+# bash 11_vue_interface_test.sh
 
 bash -x 12_genesis_forward_and_stress_test.sh
 
